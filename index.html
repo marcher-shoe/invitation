@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>The Ritual — Private Session</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -886,13 +886,13 @@
     (function () {
       var b = location.href.split('?')[0].replace(/[^\/]*$/, '');
       document.getElementById('illustrationImg').src = b + '%E1%BA%A3nh%20illustration.jpeg';
-      document.getElementById('ritualLogo').src = b + 'LOGO%20THE%20RITUAL.svg';
+      document.getElementById('ritualLogo').src = b + 'LOGO%20THE%20RITUAL.png';
       var m = {
-        'logo-louiswu': 'Louis%20Wu%20Logo.svg',
-        'logo-saphire': 'Saphire%20logo.svg',
-        'logo-marcher': 'Marcher%20LOGO.svg',
-        'logo-selection': 'selection%20logo.svg',
-        'logo-tiemen': 'Tiemen.svg'
+        'logo-louiswu': 'Louis%20Wu%20Logo.png',
+        'logo-saphire': 'Saphire%20logo.png',
+        'logo-marcher': 'Marcher%20LOGO.png',
+        'logo-selection': 'selection%20logo.png',
+        'logo-tiemen': 'Tiemen.png'
       };
       for (var id in m) document.getElementById(id).src = b + m[id];
     })();
