@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ritual — Private Session</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Raleway:wght@200;300;400;500;600&subset=vietnamese&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #1a1a1a;
+      --ink-2: #333;
+      --ink-3: #5a5a5a;
+      --ink-4: #999;
+      --gold: #b8a06a;
+      --rule: #d5d5d5;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: #111;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    .sizer {
+      width: 1080px;
+      height: 1920px;
+      transform-origin: top center;
+      flex-shrink: 0;
+    }
+
+    /* ═══ CARD ═══ */
+    .card {
+      width: 1080px;
+      height: 1920px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 0.5px solid var(--rule);
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0;
+      animation: fi .8s ease .2s forwards;
+    }
+
+    /* ═══ LOGOS ═══ */
+    .logos {
+      width: 100%;
+      padding: 42px 56px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .logo-box {
+      width: 190px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      opacity: 0;
+      animation: fi .6s ease forwards;
+    }
+
+    .logo-box:nth-child(1) { animation-delay: 0s; }
+    .logo-box:nth-child(2) { animation-delay: .12s; }
+    .logo-box:nth-child(3) { animation-delay: .24s; }
+    .logo-box:nth-child(4) { animation-delay: .36s; }
+    .logo-box:nth-child(5) { animation-delay: .48s; }
+
+    .logo-box img {
+      width: 170px;
+      height: 90px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      opacity: 0.85;
+    }
+
+    #logo-louiswu {
+      transform: scale(2.27);
+    }
+
+    #logo-saphire {
+      transform: scale(2.11);
+    }
+
+    #logo-marcher {
+      transform: scale(2.11);
+    }
+
+    #logo-selection {
+      transform: scale(0.89);
+    }
+
+    #logo-tiemen {
+      transform: scale(1.46);
+    }
+
+    /* ═══ HR ═══ */
+    .hr {
+      width: 920px;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--rule), var(--gold), transparent);
+      flex-shrink: 0;
+      z-index: 2;
+      transform: scaleX(0);
+      animation: hr-expand .8s cubic-bezier(.25,.46,.45,.94) .5s forwards;
+    }
+
+    .hr-bottom {
+      animation: hr-expand .8s cubic-bezier(.25,.46,.45,.94) 4.8s forwards;
+    }
+
+    /* ═══ ORNAMENT ═══ */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .ornament .line {
+      width: 80px;
+      height: 0.5px;
+      background: var(--gold);
+      transform: scaleX(0);
+      animation: hr-expand .5s ease 1.8s forwards;
+    }
+
+    .ornament .line:first-child {
+      transform-origin: right center;
+    }
+
+    .ornament .line:last-child {
+      transform-origin: left center;
+    }
+
+    .ornament svg {
+      color: var(--gold);
+      opacity: 0;
+      transform: scale(0) rotate(-180deg);
+      animation: star-spin .7s cubic-bezier(.34, 1.56, .64, 1) 1.9s forwards;
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    .main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      z-index: 2;
+      padding: 10px 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fi-scale 1s ease .8s forwards;
+    }
+
+    .hero-illust {
+      width: 400px;
+      height: 400px;
+      animation: gentle-float 5s ease-in-out 2s infinite;
+    }
+
+    .hero-illust img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .hero-logo {
+      margin-top: -24px;
+      text-align: center;
+    }
+
+    .hero-logo img {
+      width: 620px;
+      mix-blend-mode: multiply;
+    }
+
+    /* ── INVITE ── */
+    .invite {
+      text-align: center;
+    }
+
+    .invite .dear {
+      font: 300 italic 36px/1 'Cormorant Garamond', serif;
+      color: var(--ink-3);
+      letter-spacing: .08em;
+      opacity: 0;
+      animation: fi .6s ease 2.0s forwards;
+    }
+
+    .invite .name {
+      font: 400 78px/1.15 'Great Vibes', cursive;
+      color: var(--ink);
+      margin: 8px 0 14px;
+      opacity: 0;
+      position: relative;
+      display: inline-block;
+      animation: name-reveal 1.4s cubic-bezier(.22, .61, .36, 1) 2.4s forwards;
+    }
+
+    .invite .name::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(184, 160, 106, 0.12),
+        rgba(184, 160, 106, 0.4),
+        rgba(184, 160, 106, 0.12),
+        transparent);
+      pointer-events: none;
+      opacity: 0;
+      animation: gold-sweep .9s ease 3.5s forwards;
+    }
+
+    .invite .body {
+      font: 300 italic 34px/1.45 'Cormorant Garamond', serif;
+      color: var(--ink-2);
+      opacity: 0;
+      animation: fi .6s ease 3.2s forwards;
+    }
+
+    .invite .ev {
+      display: block;
+      font: 600 48px/1.2 'Cormorant Garamond', serif;
+      color: var(--ink);
+      letter-spacing: .05em;
+      font-style: normal;
+      margin-top: 6px;
+    }
+
+    /* ── PROGRAMME BLOCK ── */
+    .programme {
+      width: 860px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .programme > .prog-row {
+      opacity: 0;
+      animation: fi-slide .6s ease forwards;
+    }
+
+    .programme > .prog-row:nth-child(1) { animation-delay: 3.4s; }
+    .programme > .prog-row:nth-child(2) { animation-delay: 3.55s; }
+    .programme > .prog-row:nth-child(3) { animation-delay: 3.7s; }
+    .programme > .prog-row:nth-child(4) { animation-delay: 3.85s; }
+
+    .prog-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 16px 56px;
+      gap: 20px;
+    }
+
+    .prog-row + .prog-row {
+      border-top: 0.5px solid var(--rule);
+    }
+
+    .prog-row svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .prog-row .lab {
+      font: 500 16px/1 'Raleway', sans-serif;
+      letter-spacing: .28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      flex-shrink: 0;
+      min-width: 170px;
+    }
+
+    .prog-row .val {
+      font: 400 32px/1 'Cormorant Garamond', serif;
+      color: var(--ink);
+    }
+
+    /* Time row — larger time text */
+    .prog-row .time {
+      font: 300 60px/1 'Cormorant Garamond', serif;
+      color: var(--ink);
+      letter-spacing: .06em;
+    }
+
+    .prog-row .time-sep {
+      font: 300 32px/1 'Cormorant Garamond', serif;
+      color: var(--gold);
+    }
+
+    .prog-row .date {
+      font: 400 italic 30px/1 'Cormorant Garamond', serif;
+      color: var(--ink-2);
+      letter-spacing: .03em;
+    }
+
+    /* Venue row */
+    .prog-row .ven {
+      font: 600 26px/1 'Cormorant Garamond', serif;
+      color: var(--ink);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .prog-row .ven-sep {
+      font: 300 28px/1 'Raleway', sans-serif;
+      color: var(--rule);
+    }
+
+    .prog-row .adr-inline {
+      font: 300 20px/1 'Raleway', sans-serif;
+      color: var(--ink-3);
+      white-space: nowrap;
+    }
+
+    .prog-adr-sub {
+      font: 300 20px/1 'Raleway', sans-serif;
+      color: var(--ink-4);
+      margin-top: -4px;
+      letter-spacing: .03em;
+    }
+
+    /* Note section */
+    .prog-note {
+      width: 100%;
+      padding: 14px 56px 0;
+      border-top: 0.5px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fi .8s ease 4.2s forwards;
+    }
+
+    .prog-note .note-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prog-note svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .prog-note .lab {
+      font: 500 14px/1 'Raleway', sans-serif;
+      letter-spacing: .28em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .prog-note .nt {
+      font: 300 20px/1.5 'Raleway', sans-serif;
+      color: var(--ink-3);
+    }
+
+    .maps {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 40px;
+      border: 0.5px solid var(--gold);
+      color: var(--gold);
+      font: 500 14px/1 'Raleway', sans-serif;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s;
+      opacity: 0;
+      animation: fi .8s ease 4.3s forwards, maps-pulse 2.5s ease-in-out 5.2s infinite;
+    }
+
+    .maps:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* ── BOTTOM ── */
+    .bottom-brand {
+      text-align: center;
+      padding: 20px 0 36px;
+      flex-shrink: 0;
+      z-index: 2;
+      opacity: 0;
+      animation: fi 1s ease 5.0s forwards;
+    }
+
+    .bottom-brand .by {
+      font: 300 italic 16px/1 'Cormorant Garamond', serif;
+      color: var(--ink-4);
+      letter-spacing: .12em;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .bottom-brand .brand {
+      font: 500 20px/1 'Raleway', sans-serif;
+      letter-spacing: .45em;
+      color: var(--ink-3);
+      text-transform: uppercase;
+    }
+
+    @keyframes fi {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fi-scale {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes hr-expand {
+      from {
+        transform: scaleX(0);
+      }
+
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    @keyframes name-reveal {
+      0% {
+        opacity: 0;
+        transform: scale(1.12);
+        filter: blur(8px);
+        letter-spacing: .12em;
+      }
+
+      35% {
+        opacity: 1;
+        filter: blur(3px);
+        letter-spacing: .06em;
+      }
+
+      60% {
+        transform: scale(1.0);
+        filter: blur(0);
+        letter-spacing: 0;
+        text-shadow: 0 0 40px rgba(184, 160, 106, 0.7), 0 0 80px rgba(184, 160, 106, 0.3);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+        letter-spacing: 0;
+        text-shadow: 0 0 0 transparent;
+      }
+    }
+
+    @keyframes star-spin {
+      from {
+        opacity: 0;
+        transform: scale(0) rotate(-180deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes gentle-float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes fi-slide {
+      from {
+        opacity: 0;
+        transform: translateX(-24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes gold-sweep {
+      0% {
+        opacity: 1;
+        left: -60%;
+      }
+
+      100% {
+        opacity: 0;
+        left: 160%;
+      }
+    }
+
+    @keyframes maps-pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(184, 160, 106, 0);
+      }
+
+      50% {
+        box-shadow: 0 0 16px 3px rgba(184, 160, 106, 0.25);
+      }
+    }
+    /* ── VIDEO INTRO ── */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .8s ease;
+    }
+
+    .intro-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-overlay.hidden {
+      display: none;
+    }
+
+    .intro-overlay video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    .intro-overlay video.playing {
+      opacity: 1;
+    }
+
+    .intro-skip {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font: 400 12px/1 'Raleway', sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      background: rgba(255,255,255,0.08);
+      border: 0.5px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .intro-skip.show {
+      opacity: 1;
+    }
+
+    .intro-skip:hover {
+      color: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* ── GATE SCREEN ── */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .6s ease;
+    }
+
+    .gate.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gate.hidden {
+      display: none;
+    }
+
+    .gate-content {
+      text-align: center;
+    }
+
+    .gate-brand {
+      font: 600 12px/1 'Raleway', sans-serif;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: rgba(184, 160, 106, 0.5);
+      margin-bottom: 40px;
+    }
+
+    .gate-name {
+      font: 400 42px/1.2 'Great Vibes', cursive;
+      color: #b8a06a;
+      margin-bottom: 8px;
+    }
+
+    .gate-sub {
+      font: 300 italic 16px/1 'Cormorant Garamond', serif;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 50px;
+    }
+
+    .gate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      border: 1px solid rgba(184, 160, 106, 0.4);
+      color: #b8a06a;
+      padding: 16px 40px;
+      border-radius: 4px;
+      font: 500 12px/1 'Raleway', sans-serif;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      animation: gate-pulse 2.5s ease infinite;
+    }
+
+    .gate-btn:hover {
+      background: rgba(184, 160, 106, 0.1);
+      border-color: rgba(184, 160, 106, 0.7);
+      transform: scale(1.02);
+    }
+
+    .gate-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @keyframes gate-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(184,160,106,0); }
+      50% { box-shadow: 0 0 20px 2px rgba(184,160,106,0.15); }
+    }
+
+    /* Pause animations when video is playing */
+    .anim-paused *, .anim-paused *::before, .anim-paused *::after {
+      animation-play-state: paused !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- GATE SCREEN -->
+  <div class="gate" id="gate">
+    <div class="gate-content">
+      <div class="gate-brand">The Ritual</div>
+      <div class="gate-name" id="gateName"></div>
+      <div class="gate-sub">You have a private invitation</div>
+      <button class="gate-btn" onclick="openInvitation()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <polyline points="3,5 12,13 21,5"/>
+        </svg>
+        Mở thiệp mời
+      </button>
+    </div>
+  </div>
+
+  <!-- VIDEO INTRO -->
+  <div class="intro-overlay" id="introOverlay" style="display:none">
+    <video id="introVideo" playsinline preload="auto">
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+    <div class="intro-skip" id="introSkip" onclick="skipIntro()">Skip ›</div>
+  </div>
+
+  <div class="wrap anim-paused" id="wrap">
+    <div class="sizer" id="sizer">
+      <div class="card">
+
+        <!-- LOGOS -->
+        <div class="logos">
+          <div class="logo-box"><img id="logo-louiswu" alt="Louis Wu"></div>
+          <div class="logo-box"><img id="logo-saphire" alt="Saphire"></div>
+          <div class="logo-box"><img id="logo-marcher" alt="Marcher"></div>
+          <div class="logo-box"><img id="logo-selection" alt="Selektion"></div>
+          <div class="logo-box"><img id="logo-tiemen" alt="Tie Men"></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="main">
+
+          <!-- HERO -->
+          <div class="hero">
+            <div class="hero-illust"><img id="illustrationImg" alt=""></div>
+            <div class="hero-logo"><img id="ritualLogo" alt="The Ritual"></div>
+          </div>
+
+          <!-- Decorative ornament -->
+          <div class="ornament">
+            <div class="line"></div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <path d="M12 2 L14.5 9 L22 9 L16 13.5 L18 21 L12 16.5 L6 21 L8 13.5 L2 9 L9.5 9 Z" />
+            </svg>
+            <div class="line"></div>
+          </div>
+
+          <!-- INVITE -->
+          <div class="invite">
+            <div class="dear">Dear</div>
+            <div class="name" id="guestName">Guest</div>
+            <div class="body">
+              You are invited to<br>
+              <span class="ev">The Ritual · Private Session</span>
+            </div>
+          </div>
+
+          <!-- UNIFIED PROGRAMME BLOCK -->
+          <div class="programme">
+            <div class="prog-row">
+              <!-- Bow tie icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M2 6 L9 12 L2 18 Z M22 6 L15 12 L22 18 Z M9 12 L15 12" />
+                <circle cx="12" cy="12" r="1.5" />
+              </svg>
+              <div class="lab">Dress Code</div>
+              <div class="val">Suit &amp; Leather Shoes</div>
+            </div>
+            <div class="prog-row">
+              <!-- Champagne glass icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M8 2 L16 2 L14 10 Q12 14 10 10 Z M12 14 L12 20 M8 20 L16 20" />
+              </svg>
+              <div class="lab">Experience</div>
+              <div class="val">Cold Cuts &amp; Sparkling</div>
+            </div>
+            <div class="prog-row">
+              <!-- Clock icon -->
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <div class="time">14:00</div>
+              <div class="time-sep">·</div>
+              <div class="date">Friday, 24 April 2026</div>
+            </div>
+            <div class="prog-row">
+              <!-- Map pin icon -->
+              <svg viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              <div class="ven">Louis Wu Studio</div>
+              <div class="ven-sep">|</div>
+              <div class="adr-inline">Số 40, Đường 50 Bình Trưng Tây, Thủ Đức, HCM</div>
+            </div>
+            <div class="prog-note">
+              <div class="note-head">
+                <!-- Info/Note icon -->
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="16" x2="12" y2="12" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                </svg>
+                <div class="lab">Note</div>
+              </div>
+              <div class="nt">Kindly arrive by Grab or taxi · Please bring along a pair of shoes</div>
+            </div>
+            <a class="maps" href="https://maps.app.goo.gl/HernypWjkRHEpbDL8" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              View on Maps
+            </a>
+          </div>
+
+        </div><!-- /main -->
+
+        <div class="hr hr-bottom"></div>
+
+        <div class="bottom-brand">
+          <span class="by">An Experience by</span>
+          <span class="brand">The Marcher</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var b = location.href.split('?')[0].replace(/[^\/]*$/, '');
+      document.getElementById('illustrationImg').src = b + '%E1%BA%A3nh%20illustration.jpeg';
+      document.getElementById('ritualLogo').src = b + 'LOGO%20THE%20RITUAL.svg';
+      var m = {
+        'logo-louiswu': 'Louis%20Wu%20Logo.svg',
+        'logo-saphire': 'Saphire%20logo.svg',
+        'logo-marcher': 'Marcher%20LOGO.svg',
+        'logo-selection': 'selection%20logo.svg',
+        'logo-tiemen': 'Tiemen.svg'
+      };
+      for (var id in m) document.getElementById(id).src = b + m[id];
+    })();
+    (function () {
+      var p = new URLSearchParams(location.search);
+      document.getElementById('guestName').textContent = p.get('name') || p.get('to') || 'Guest';
+    })();
+    function sc() {
+      var el = document.getElementById('sizer');
+      var s = Math.min(innerWidth / 1080, innerHeight / 1920);
+      el.style.transform = 'scale(' + s + ')';
+      el.style.transformOrigin = 'top center';
+      el.style.marginTop = Math.max(0, (innerHeight - 1920 * s) / 2) + 'px';
+    }
+    sc(); addEventListener('resize', sc);
+
+    // ── GATE + VIDEO INTRO LOGIC ──
+    var gate = document.getElementById('gate');
+    var intro = document.getElementById('introOverlay');
+    var video = document.getElementById('introVideo');
+    var wrap = document.getElementById('wrap');
+    var skipEl = document.getElementById('introSkip');
+    var introEnded = false;
+
+    // Set gate name
+    var gName = new URLSearchParams(location.search).get('name') || new URLSearchParams(location.search).get('to') || 'Guest';
+    document.getElementById('gateName').textContent = gName;
+
+    function openInvitation() {
+      // User has interacted → audio is now allowed by browser
+      gate.classList.add('fade-out');
+      setTimeout(function() {
+        gate.classList.add('hidden');
+      }, 600);
+
+      // Show video overlay and play WITH sound
+      intro.style.display = 'flex';
+      video.muted = false;
+      video.play();
+      setTimeout(function() { video.classList.add('playing'); }, 50);
+
+      // Show skip after 3s
+      setTimeout(function() { skipEl.classList.add('show'); }, 3000);
+    }
+
+    function endIntro() {
+      if (introEnded) return;
+      introEnded = true;
+      intro.classList.add('fade-out');
+      wrap.classList.remove('anim-paused');
+      setTimeout(function() { intro.classList.add('hidden'); }, 800);
+    }
+
+    function skipIntro() {
+      video.pause();
+      endIntro();
+    }
+
+    video.addEventListener('ended', endIntro);
+  </script>
+</body>
+
+</html>

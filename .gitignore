@@ -1,0 +1,19 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Original video source (too large)
+Marcher-LWS-Vertical.mov
+
+# Reference/example files
+banner lớn in.jpg
+sự kiện của Marcher.mp4
+ví dụ.mp4
+
+# Exported video
+The_Ritual_Invitation.mp4
+
+# Node artifacts
+node_modules/
+package.json
+package-lock.json

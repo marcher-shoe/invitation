@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ritual — Admin · Link Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300&family=Raleway:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0e0e;
+      --card: #161616;
+      --card-2: #1c1c1c;
+      --border: #2a2a2a;
+      --gold: #b8a06a;
+      --gold-dim: rgba(184, 160, 106, 0.15);
+      --gold-glow: rgba(184, 160, 106, 0.3);
+      --text: #e0ddd5;
+      --text-2: #8a8780;
+      --text-3: #5a5854;
+      --green: #5cb87a;
+      --red: #c45c5c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Raleway', sans-serif;
+      min-height: 100vh;
+      padding: 0;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 40px 40px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-left h1 {
+      font: 600 14px/1 'Raleway', sans-serif;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .header-left p {
+      font: 300 italic 13px/1 'Cormorant Garamond', serif;
+      color: var(--text-2);
+      margin-top: 6px;
+    }
+
+    .header-right {
+      font: 400 12px/1 'Raleway', sans-serif;
+      color: var(--text-3);
+      letter-spacing: .08em;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 40px 60px;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font: 500 11px/1 'Raleway', sans-serif;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 18px;
+    }
+
+    /* ── INPUT AREA ── */
+    .input-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .input-group input {
+      flex: 1;
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font: 400 15px/1 'Raleway', sans-serif;
+      color: var(--text);
+      outline: none;
+      transition: border-color .3s;
+    }
+
+    .input-group input::placeholder {
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    .input-group input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .btn {
+      background: var(--gold);
+      color: #111;
+      border: none;
+      border-radius: 6px;
+      padding: 14px 28px;
+      font: 600 12px/1 'Raleway', sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: #cdb87a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--gold-glow);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 18px;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      font: 500 11px/1 'Raleway', sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      cursor: pointer;
+      transition: all .2s;
+    }
+
+    .tab:first-child { border-radius: 6px 0 0 6px; }
+    .tab:last-child { border-radius: 0 6px 6px 0; }
+
+    .tab.active {
+      background: var(--card-2);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ── BATCH ── */
+    .batch-area {
+      display: none;
+    }
+
+    .batch-area.active {
+      display: block;
+    }
+
+    .single-area.active {
+      display: block;
+    }
+
+    .single-area {
+      display: none;
+    }
+
+    textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font: 400 14px/1.6 'Raleway', sans-serif;
+      color: var(--text);
+      outline: none;
+      resize: vertical;
+      min-height: 120px;
+      transition: border-color .3s;
+    }
+
+    textarea::placeholder {
+      color: var(--text-3);
+      font-style: italic;
+    }
+
+    textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .batch-btn-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    /* ── RESULT ── */
+    .result {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .result.show { display: block; }
+
+    .result-card {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .result-card .name-tag {
+      font: 400 28px/1 'Great Vibes', cursive;
+      color: var(--gold);
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .result-card .link-text {
+      flex: 1;
+      font: 400 12px/1 'Raleway', sans-serif;
+      color: var(--text-2);
+      word-break: break-all;
+      letter-spacing: .02em;
+    }
+
+    .btn-sm {
+      background: transparent;
+      border: 0.5px solid var(--gold);
+      color: var(--gold);
+      border-radius: 4px;
+      padding: 8px 16px;
+      font: 500 10px/1 'Raleway', sans-serif;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+
+    .btn-sm:hover {
+      background: var(--gold);
+      color: #111;
+    }
+
+    .btn-sm.copied {
+      background: var(--green);
+      border-color: var(--green);
+      color: #fff;
+    }
+
+    .btn-sm.open-btn {
+      border-color: var(--text-3);
+      color: var(--text-3);
+    }
+
+    .btn-sm.open-btn:hover {
+      border-color: var(--text);
+      color: var(--text);
+      background: transparent;
+    }
+
+    /* ── HISTORY ── */
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .history-item {
+      background: var(--bg);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      animation: slideIn .3s ease;
+    }
+
+    .history-item .name-tag {
+      font: 400 22px/1 'Great Vibes', cursive;
+      color: var(--gold);
+      min-width: 140px;
+      flex-shrink: 0;
+    }
+
+    .history-item .link-text {
+      flex: 1;
+      font: 400 11px/1 'Raleway', sans-serif;
+      color: var(--text-3);
+      word-break: break-all;
+    }
+
+    .history-item .btn-group {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .history-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .count-badge {
+      font: 400 12px/1 'Raleway', sans-serif;
+      color: var(--text-3);
+    }
+
+    .count-badge span {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-3);
+      font: 300 italic 15px/1.5 'Cormorant Garamond', serif;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--green);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 6px;
+      font: 500 12px/1 'Raleway', sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      opacity: 0;
+      transition: all .35s cubic-bezier(.34, 1.56, .64, 1);
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 60px;
+      height: 0.5px;
+      background: var(--gold);
+      margin: 0 auto 20px;
+      opacity: 0.4;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LOGIN GATE ── */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .4s, visibility .4s;
+    }
+
+    .login-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .login-box {
+      text-align: center;
+      width: 360px;
+    }
+
+    .login-box .lock-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+    .login-box h2 {
+      font: 600 13px/1 'Raleway', sans-serif;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .login-box p {
+      font: 300 italic 14px/1 'Cormorant Garamond', serif;
+      color: var(--text-3);
+      margin-bottom: 28px;
+    }
+
+    .login-box input {
+      width: 100%;
+      background: var(--card);
+      border: 0.5px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 18px;
+      font: 400 14px/1 'Raleway', sans-serif;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: .15em;
+      outline: none;
+      transition: border-color .3s;
+    }
+
+    .login-box input:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim);
+    }
+
+    .login-box input.error {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(196, 92, 92, 0.15);
+      animation: shake .4s ease;
+    }
+
+    .login-box button {
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .login-error {
+      font: 400 12px/1 'Raleway', sans-serif;
+      color: var(--red);
+      margin-top: 12px;
+      height: 14px;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    .app-content {
+      display: none;
+    }
+
+    .app-content.unlocked {
+      display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .container { padding: 20px 16px 40px; }
+      .header { padding: 24px 16px 0; }
+      .section { padding: 20px 16px; }
+      .input-group { flex-direction: column; }
+      .result-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .result-card .name-tag { min-width: auto; }
+      .history-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .history-item .name-tag { min-width: auto; }
+      .login-box { width: 90%; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ── LOGIN GATE ── -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-box">
+      <svg class="lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <h2>The Ritual</h2>
+      <p>Admin Access Required</p>
+      <input type="password" id="pwInput" placeholder="Nhập mật khẩu" onkeydown="if(event.key==='Enter') doLogin()">
+      <button class="btn" onclick="doLogin()">Đăng nhập</button>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
+  <!-- ── APP ── -->
+  <div class="app-content" id="appContent">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>The Ritual</h1>
+      <p>Invitation Link Generator</p>
+    </div>
+    <div class="header-right">Admin Panel</div>
+  </div>
+
+  <div class="container">
+
+    <!-- ── CREATE LINK ── -->
+    <div class="section">
+      <div class="section-title">Tạo link mời</div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('single')">Từng người</div>
+        <div class="tab" onclick="switchTab('batch')">Nhiều người</div>
+      </div>
+
+      <!-- Single -->
+      <div class="single-area active" id="single-area">
+        <div class="input-group">
+          <input type="text" id="nameInput" placeholder="Nhập tên khách mời, ví dụ: Trần Thế Tài" 
+                 onkeydown="if(event.key==='Enter') generateSingle()">
+          <button class="btn" onclick="generateSingle()">Tạo Link</button>
+        </div>
+        <div class="result" id="singleResult"></div>
+      </div>
+
+      <!-- Batch -->
+      <div class="batch-area" id="batch-area">
+        <textarea id="batchInput" placeholder="Nhập mỗi tên một dòng, ví dụ:&#10;Trần Thế Tài&#10;Nguyễn Văn A&#10;Lê Công Vinh"></textarea>
+        <div class="batch-btn-row">
+          <button class="btn" onclick="generateBatch()">Tạo tất cả</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── HISTORY ── -->
+    <div class="section">
+      <div class="history-actions">
+        <div class="section-title" style="margin-bottom:0">Danh sách đã tạo</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="count-badge"><span id="count">0</span> link</span>
+          <button class="btn-sm" onclick="exportAll()" id="exportBtn" style="display:none">Export</button>
+          <button class="btn-sm" onclick="clearAll()" id="clearBtn" style="display:none;border-color:var(--red);color:var(--red)">Xoá hết</button>
+        </div>
+      </div>
+      <div id="historyList">
+        <div class="empty-state">Chưa có link nào được tạo</div>
+      </div>
+    </div>
+
+  </div>
+
+  </div><!-- end .app-content -->
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── LOGIN ──
+    const PASS_HASH = '8a5e1e4e'; // simple hash of 'tranthetai'
+    function simpleHash(s) {
+      let h = 0;
+      for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+      return (h >>> 0).toString(16);
+    }
+
+    function doLogin() {
+      const pw = document.getElementById('pwInput').value;
+      if (pw === 'tranthetai') {
+        sessionStorage.setItem('ritual_auth', '1');
+        unlock();
+      } else {
+        const inp = document.getElementById('pwInput');
+        inp.classList.add('error');
+        document.getElementById('loginError').textContent = 'Mật khẩu không đúng';
+        setTimeout(() => { inp.classList.remove('error'); }, 500);
+        inp.value = '';
+        inp.focus();
+      }
+    }
+
+    function unlock() {
+      document.getElementById('loginOverlay').classList.add('hidden');
+      document.getElementById('appContent').classList.add('unlocked');
+    }
+
+    // Auto-login if already authenticated this session
+    if (sessionStorage.getItem('ritual_auth') === '1') {
+      unlock();
+    } else {
+      document.getElementById('pwInput').focus();
+    }
+
+    // ── Base URL (auto-detect) ──
+    const BASE = location.href.replace('admin.html', 'index.html');
+
+    // ── State ──
+    let links = JSON.parse(localStorage.getItem('ritual_links') || '[]');
+
+    // ── Init ──
+    renderHistory();
+
+    // ── Tab switch ──
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach((t, i) => {
+        t.classList.toggle('active', (tab === 'single' ? i === 0 : i === 1));
+      });
+      document.getElementById('single-area').classList.toggle('active', tab === 'single');
+      document.getElementById('batch-area').classList.toggle('active', tab === 'batch');
+    }
+
+    // ── Generate single ──
+    function generateSingle() {
+      const name = document.getElementById('nameInput').value.trim();
+      if (!name) return;
+
+      const url = makeUrl(name);
+      addLink(name, url);
+
+      // Show inline result
+      document.getElementById('singleResult').classList.add('show');
+      document.getElementById('singleResult').innerHTML = `
+        <div class="result-card">
+          <div class="name-tag">${name}</div>
+          <div class="link-text">${url}</div>
+          <button class="btn-sm" onclick="copyLink('${url}', this)">Copy</button>
+          <button class="btn-sm open-btn" onclick="window.open('${url}','_blank')">Mở</button>
+        </div>
+      `;
+
+      document.getElementById('nameInput').value = '';
+      document.getElementById('nameInput').focus();
+    }
+
+    // ── Generate batch ──
+    function generateBatch() {
+      const text = document.getElementById('batchInput').value.trim();
+      if (!text) return;
+
+      const names = text.split('\n').map(n => n.trim()).filter(n => n);
+      names.forEach(name => {
+        addLink(name, makeUrl(name));
+      });
+
+      document.getElementById('batchInput').value = '';
+      showToast(`Đã tạo ${names.length} link`);
+    }
+
+    // ── Make URL ──
+    function makeUrl(name) {
+      return BASE + '?name=' + encodeURIComponent(name);
+    }
+
+    // ── Add to list ──
+    function addLink(name, url) {
+      // Avoid duplicates
+      if (links.find(l => l.name === name)) return;
+      links.unshift({ name, url, created: new Date().toISOString() });
+      save();
+      renderHistory();
+    }
+
+    // ── Render history ──
+    function renderHistory() {
+      const el = document.getElementById('historyList');
+      document.getElementById('count').textContent = links.length;
+      document.getElementById('exportBtn').style.display = links.length ? '' : 'none';
+      document.getElementById('clearBtn').style.display = links.length ? '' : 'none';
+
+      if (!links.length) {
+        el.innerHTML = '<div class="empty-state">Chưa có link nào được tạo</div>';
+        return;
+      }
+
+      el.innerHTML = '<div class="history-list">' + links.map((l, i) => `
+        <div class="history-item">
+          <div class="name-tag">${l.name}</div>
+          <div class="link-text">${l.url}</div>
+          <div class="btn-group">
+            <button class="btn-sm" onclick="copyLink('${l.url}', this)">Copy</button>
+            <button class="btn-sm open-btn" onclick="window.open('${l.url}','_blank')">Mở</button>
+            <button class="btn-sm" style="border-color:var(--red);color:var(--red)" 
+                    onclick="removeLink(${i})" 
+                    onmouseover="this.style.background='var(--red)';this.style.color='#fff'"
+                    onmouseout="this.style.background='transparent';this.style.color='var(--red)'">✕</button>
+          </div>
+        </div>
+      `).join('') + '</div>';
+    }
+
+    // ── Copy ──
+    function copyLink(url, btn) {
+      navigator.clipboard.writeText(url).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 1500);
+      });
+    }
+
+    // ── Remove ──
+    function removeLink(i) {
+      links.splice(i, 1);
+      save();
+      renderHistory();
+    }
+
+    // ── Clear all ──
+    function clearAll() {
+      if (!confirm('Xoá tất cả link?')) return;
+      links = [];
+      save();
+      renderHistory();
+      document.getElementById('singleResult').classList.remove('show');
+    }
+
+    // ── Export ──
+    function exportAll() {
+      const lines = links.map(l => `${l.name}\t${l.url}`);
+      const text = 'Tên\tLink\n' + lines.join('\n');
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ritual_invitation_links.txt';
+      a.click();
+      showToast('Đã export ' + links.length + ' link');
+    }
+
+    // ── Save to localStorage ──
+    function save() {
+      localStorage.setItem('ritual_links', JSON.stringify(links));
+    }
+
+    // ── Toast ──
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2000);
+    }
+  </script>
+</body>
+
+</html>
