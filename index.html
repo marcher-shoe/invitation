@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0" />
   <title>The Ritual — Private Session</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -37,7 +37,6 @@
       align-items: flex-start;
       justify-content: center;
       -webkit-font-smoothing: antialiased;
-      touch-action: pan-y;
       overflow-x: hidden;
     }
 
@@ -54,6 +53,8 @@
       height: 1920px;
       transform-origin: top center;
       flex-shrink: 0;
+      will-change: transform;
+      contain: layout style;
     }
 
     /* ═══ CARD ═══ */
@@ -66,6 +67,7 @@
       align-items: center;
       overflow: hidden;
       position: relative;
+      contain: content;
     }
 
     .card::before {
