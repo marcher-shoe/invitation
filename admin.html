@@ -611,7 +611,17 @@
     }
 
     // ── Base URL (auto-detect) ──
-    const BASE = location.href.replace('admin.html', 'index.html');
+    // Works on file:// (admin.html → index.html) and GitHub Pages (/admin → /index.html)
+    const BASE = (function() {
+      var url = location.origin + location.pathname;
+      // Remove query string
+      url = url.split('?')[0];
+      // Remove trailing admin.html or admin
+      url = url.replace(/admin(\.html)?$/, '');
+      // Ensure trailing slash
+      if (!url.endsWith('/')) url += '/';
+      return url + 'index.html';
+    })();
 
     // ── State ──
     let links = JSON.parse(localStorage.getItem('ritual_links') || '[]');
