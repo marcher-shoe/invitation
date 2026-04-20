@@ -553,6 +553,33 @@
 
     /* ═══ LUXURY KEYFRAMES ═══ */
 
+    @keyframes name-reveal {
+      0% {
+        opacity: 0;
+        transform: scale(1.12);
+        filter: blur(8px);
+        letter-spacing: .12em;
+      }
+      35% {
+        opacity: 1;
+        filter: blur(3px);
+        letter-spacing: .06em;
+      }
+      60% {
+        transform: scale(1.0);
+        filter: blur(0);
+        letter-spacing: 0;
+        text-shadow: 0 0 40px rgba(184,160,106,0.7), 0 0 80px rgba(184,160,106,0.3);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0);
+        letter-spacing: 0;
+        text-shadow: 0 0 0 transparent;
+      }
+    }
+
     @keyframes border-reveal {
       0% {
         opacity: 0;
