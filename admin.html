@@ -382,6 +382,84 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* ── TEMPLATE PICKER ── */
+    .template-picker {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .template-card {
+      flex: 1;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all .3s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-card:hover {
+      border-color: var(--text-3);
+    }
+
+    .template-card.selected {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px var(--gold-dim), 0 4px 20px rgba(184,160,106,0.15);
+    }
+
+    .template-card.selected::after {
+      content: '✓';
+      position: absolute;
+      top: 8px; right: 10px;
+      font-size: 14px;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .template-preview {
+      width: 100%;
+      height: 240px;
+      background: var(--card-2);
+      border-radius: 4px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .template-preview .preview-label {
+      font: 600 28px/1 'Cormorant Garamond', serif;
+      color: var(--text-3);
+      letter-spacing: .1em;
+    }
+
+    .template-card.selected .preview-label {
+      color: var(--gold);
+    }
+
+    .template-name {
+      font: 500 11px/1 'Raleway', sans-serif;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    .template-card.selected .template-name {
+      color: var(--gold);
+    }
+
+    .template-desc {
+      font: 300 italic 12px/1.3 'Cormorant Garamond', serif;
+      color: var(--text-3);
+      margin-top: 4px;
+    }
+
     /* ── LOGIN GATE ── */
     .login-overlay {
       position: fixed;
@@ -529,6 +607,31 @@
     <div class="section">
       <div class="section-title">Tạo link mời</div>
 
+      <!-- Template Picker -->
+      <div class="template-picker">
+        <div class="template-card selected" onclick="selectTemplate(1)" id="tpl1">
+          <div class="template-preview">
+            <img src="preview_tpl1.png" alt="Classic" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
+          </div>
+          <div class="template-name">Template 1 — Classic</div>
+          <div class="template-desc">Phiên bản gốc</div>
+        </div>
+        <div class="template-card" onclick="selectTemplate(2)" id="tpl2">
+          <div class="template-preview">
+            <img src="preview_tpl2.png" alt="Luxury" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
+          </div>
+          <div class="template-name">Template 2 — Luxury</div>
+          <div class="template-desc">Pure White · Animation</div>
+        </div>
+        <div class="template-card" onclick="selectTemplate(3)" id="tpl3">
+          <div class="template-preview">
+            <img src="preview_tpl3.png" alt="Embossed" style="width:100%;height:100%;object-fit:cover;object-position:top center;">
+          </div>
+          <div class="template-name">Template 3 — Embossed</div>
+          <div class="template-desc">Textured · Bold · Animation</div>
+        </div>
+      </div>
+
       <div class="tabs">
         <div class="tab active" onclick="switchTab('single')">Từng người</div>
         <div class="tab" onclick="switchTab('batch')">Nhiều người</div>
@@ -610,17 +713,23 @@
       document.getElementById('pwInput').focus();
     }
 
-    // ── Base URL (auto-detect) ──
-    // Works on file:// (admin.html → index.html) and GitHub Pages (/admin → /index.html)
-    const BASE = (function() {
+    // ── Template selection ──
+    let selectedTemplate = 1;
+
+    function selectTemplate(n) {
+      selectedTemplate = n;
+      document.getElementById('tpl1').classList.toggle('selected', n === 1);
+      document.getElementById('tpl2').classList.toggle('selected', n === 2);
+      document.getElementById('tpl3').classList.toggle('selected', n === 3);
+    }
+
+    // ── Base URLs (auto-detect) ──
+    const BASE_DIR = (function() {
       var url = location.origin + location.pathname;
-      // Remove query string
       url = url.split('?')[0];
-      // Remove trailing admin.html or admin
       url = url.replace(/admin(\.html)?$/, '');
-      // Ensure trailing slash
       if (!url.endsWith('/')) url += '/';
-      return url + 'index.html';
+      return url;
     })();
 
     // ── State ──
@@ -677,7 +786,9 @@
 
     // ── Make URL ──
     function makeUrl(name) {
-      return BASE + '?name=' + encodeURIComponent(name);
+      const pages = { 1: 'index.html', 2: 'record.html', 3: 'record2.html' };
+      const page = pages[selectedTemplate] || 'index.html';
+      return BASE_DIR + page + '?name=' + encodeURIComponent(name);
     }
 
     // ── Add to list ──

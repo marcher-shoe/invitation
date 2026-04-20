@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Ritual — Private Session</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Raleway:wght@200;300;400;500;600&subset=vietnamese&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink: #1a1714;
+      --ink-2: #2a2520;
+      --ink-3: #4a4540;
+      --ink-4: #7a756f;
+      --gold: #b8a06a;
+      --gold-light: #d4c494;
+      --gold-dark: #8a7445;
+      --rule: #ccc7c0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: #111;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .wrap {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    .sizer {
+      width: 1080px;
+      height: 1920px;
+      transform-origin: top center;
+      flex-shrink: 0;
+      will-change: transform;
+      contain: layout style;
+    }
+
+    /* ═══ CARD ═══ */
+    .card {
+      width: 1080px;
+      height: 1920px;
+      background: #faf8f5 url('background%202@2x.png') center / cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      contain: content;
+      perspective: 1200px;
+      /* Dramatic card entrance */
+      opacity: 0;
+      transform: scale(0.92) translateY(40px);
+      animation: card-entrance 2s cubic-bezier(.16,1,.3,1) 0.2s forwards;
+    }
+
+    /* Grand gold shimmer sweep — the WOW moment */
+    .card-shimmer {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(105deg,
+          transparent 20%,
+          rgba(184, 160, 106, 0.03) 35%,
+          rgba(184, 160, 106, 0.12) 45%,
+          rgba(255, 235, 180, 0.18) 50%,
+          rgba(184, 160, 106, 0.12) 55%,
+          rgba(184, 160, 106, 0.03) 65%,
+          transparent 80%);
+      z-index: 20;
+      pointer-events: none;
+      animation: shimmer-sweep 2s cubic-bezier(.25,.46,.45,.94) 9.5s forwards,
+                 shimmer-sweep 2.5s cubic-bezier(.25,.46,.45,.94) 12s forwards;
+    }
+
+    /* Floating gold dust particles */
+    .gold-particles {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 19;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .gold-particles::before,
+    .gold-particles::after {
+      content: '';
+      position: absolute;
+      width: 4px; height: 4px;
+      background: radial-gradient(circle, rgba(212,196,148,0.8), transparent);
+      border-radius: 50%;
+      opacity: 0;
+    }
+    .gold-particles::before {
+      top: 30%; left: 20%;
+      box-shadow:
+        180px -120px 0 0 rgba(212,196,148,0.3),
+        420px -60px 0 1px rgba(212,196,148,0.25),
+        650px -180px 0 0 rgba(212,196,148,0.35),
+        100px 200px 0 1px rgba(212,196,148,0.2),
+        350px 300px 0 0 rgba(212,196,148,0.3),
+        600px 150px 0 1px rgba(212,196,148,0.25),
+        800px 250px 0 0 rgba(212,196,148,0.2);
+      animation: particles-drift 8s ease-in-out 3s forwards;
+    }
+    .gold-particles::after {
+      top: 60%; left: 15%;
+      box-shadow:
+        200px -80px 0 0 rgba(212,196,148,0.25),
+        450px 40px 0 1px rgba(212,196,148,0.3),
+        700px -20px 0 0 rgba(212,196,148,0.2),
+        150px 180px 0 1px rgba(212,196,148,0.35),
+        500px 120px 0 0 rgba(212,196,148,0.25);
+      animation: particles-drift 10s ease-in-out 4.5s forwards;
+    }
+
+
+    /* ═══ LOGOS ═══ */
+    .logos {
+      width: 100%;
+      padding: 60px 80px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .logo-box {
+      width: 190px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      opacity: 0;
+      mix-blend-mode: multiply;
+      animation: logo-3d 1.2s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+
+    .logo-box:nth-child(1) {
+      animation-delay: .5s;
+    }
+
+    .logo-box:nth-child(2) {
+      animation-delay: .8s;
+    }
+
+    .logo-box:nth-child(3) {
+      animation-delay: 1.1s;
+    }
+
+    .logo-box:nth-child(4) {
+      animation-delay: 1.4s;
+    }
+
+    .logo-box:nth-child(5) {
+      animation-delay: 1.7s;
+    }
+
+    .logo-box img {
+      width: 170px;
+      height: 90px;
+      object-fit: contain;
+      opacity: 0.85;
+    }
+
+    #logo-louiswu {
+      transform: scale(1.4);
+    }
+
+    #logo-saphire {
+      transform: scale(1.4);
+    }
+
+    #logo-marcher {
+      transform: scale(1.9);
+      /* Prominent center */
+    }
+
+    #logo-selection {
+      transform: scale(1.0);
+    }
+
+    #logo-tiemen {
+      transform: scale(1.4);
+    }
+
+    /* ═══ HR ═══ */
+    .hr {
+      width: 920px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold), var(--gold-light), transparent);
+      flex-shrink: 0;
+      z-index: 2;
+      transform: scaleX(0);
+      animation: hr-glow 1.8s cubic-bezier(.16, 1, .3, 1) 2.0s forwards;
+    }
+
+    .hr-bottom {
+      animation: hr-glow 1.8s cubic-bezier(.16, 1, .3, 1) 8.8s forwards;
+    }
+
+    /* ═══ ORNAMENT ═══ */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .ornament .line {
+      width: 100px;
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+      transform: scaleX(0);
+      animation: hr-glow 1.2s cubic-bezier(.16, 1, .3, 1) 4.8s forwards;
+    }
+
+    .ornament .line:first-child {
+      transform-origin: right center;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .ornament .line:last-child {
+      transform-origin: left center;
+      background: linear-gradient(270deg, transparent, var(--gold));
+    }
+
+    .ornament svg {
+      color: var(--gold);
+      opacity: 0;
+      transform: scale(0) rotate(-180deg);
+      animation: star-bloom 1.5s cubic-bezier(.34, 1.56, .64, 1) 5.0s forwards;
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    .main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      padding: 40px 0;
+      gap: 60px;
+      /* Thêm khoảng trống giữa các khối lớn */
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: hero-cinematic 2.5s cubic-bezier(.16, 1, .3, 1) 2.2s forwards;
+    }
+
+    .hero-illust {
+      width: 280px;
+      height: 280px;
+      mix-blend-mode: multiply;
+      animation: gentle-float 6s ease-in-out 3.6s infinite;
+    }
+
+    .hero-illust img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .hero-logo {
+      margin-top: -10px;
+      text-align: center;
+      mix-blend-mode: multiply;
+    }
+
+    .hero-logo img {
+      width: 480px;
+    }
+
+    /* ── INVITE ── */
+    .invite {
+      text-align: center;
+    }
+
+    /* Khoảng trống giữ chỗ tên khách — để overlay trong video editor */
+    .name-spacer {
+      height: 120px;
+      margin: 10px 0 20px;
+      position: relative;
+      width: 500px;
+    }
+
+    .name-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      animation: glow-pulse 2.5s ease-in-out 5.5s forwards;
+    }
+
+    .invite .dear {
+      font: 300 italic 32px/1 'Cormorant Garamond', serif;
+      color: var(--ink-4);
+      letter-spacing: .15em;
+      opacity: 0;
+      /* Embossed letterpress effect */
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8), 0 -0.5px 0 rgba(0, 0, 0, 0.06);
+      animation: text-elegant 1.5s cubic-bezier(.16, 1, .3, 1) 5.2s forwards;
+    }
+
+    .invite .name {
+      font: 400 78px/1.15 'Great Vibes', cursive;
+      color: var(--ink);
+      margin: 8px 0 14px;
+      opacity: 0;
+      position: relative;
+      display: inline-block;
+      animation: name-reveal 1.4s cubic-bezier(.22, .61, .36, 1) 2.4s forwards;
+    }
+
+    .invite .name::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 40%;
+      height: 100%;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(184, 160, 106, 0.12),
+          rgba(184, 160, 106, 0.4),
+          rgba(184, 160, 106, 0.12),
+          transparent);
+      pointer-events: none;
+      opacity: 0;
+      animation: gold-sweep .9s ease 3.5s forwards;
+    }
+
+    .invite .body {
+      font: 400 italic 30px/1.5 'Cormorant Garamond', serif;
+      color: var(--ink-2);
+      letter-spacing: .05em;
+      opacity: 0;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.9);
+      animation: text-breathe 1.5s cubic-bezier(.16, 1, .3, 1) 6.0s forwards;
+    }
+
+    .invite .ev {
+      display: block;
+      font: 600 44px/1.3 'Cormorant Garamond', serif;
+      letter-spacing: .08em;
+      font-style: normal;
+      margin-top: 8px;
+      /* Black metallic gloss gradient (Black Chrome / Titanium) */
+      background: linear-gradient(135deg, #0f0f0f 0%, #2c2c2c 25%, #666666 45%, #e0e0e0 50%, #4a4a4a 55%, #1a1a1a 75%, #050505 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: text-breathe 1.5s cubic-bezier(.16, 1, .3, 1) 6.0s forwards,
+        gold-text-shimmer 3s ease-in-out 7.5s 1;
+    }
+
+    /* ── LUXURY DETAILS SECTION (GRID LAYOUT) ── */
+    .details {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      row-gap: 50px;
+      column-gap: 120px;
+      width: 920px;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .det-row {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      opacity: 0;
+      animation: text-breathe 1.1s cubic-bezier(.16, 1, .3, 1) forwards;
+    }
+
+    .det-1 {
+      animation-delay: 6.5s;
+    }
+
+    .det-2 {
+      animation-delay: 6.8s;
+    }
+
+    .det-3 {
+      animation-delay: 7.1s;
+    }
+
+    .det-4 {
+      animation-delay: 7.4s;
+    }
+
+    .det-lab {
+      font: 400 13px/1 'Raleway', sans-serif;
+      letter-spacing: .5em;
+      color: var(--gold-dark);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      text-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.9);
+      border-bottom: 0.5px solid rgba(184, 160, 106, 0.3);
+      padding-bottom: 8px;
+    }
+
+    .det-val {
+      font: 500 32px/1.3 'Cormorant Garamond', serif;
+      color: var(--ink);
+      text-shadow: 0 1px 1px rgba(255,255,255,0.9);
+    }
+
+    .det-time {
+      font: 400 56px/1 'Cormorant Garamond', serif;
+      color: var(--ink);
+      letter-spacing: .06em;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.9);
+    }
+
+    .det-date {
+      font: 500 italic 28px/1.2 'Cormorant Garamond', serif;
+      color: var(--ink-2);
+      margin-top: 6px;
+    }
+
+    .det-venue {
+      font: 700 26px/1.3 'Cormorant Garamond', serif;
+      color: var(--ink);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 1px rgba(255,255,255,0.9);
+    }
+
+    .det-addr {
+      font: 400 20px/1.5 'Raleway', sans-serif;
+      color: var(--ink-3);
+      margin-top: 6px;
+      letter-spacing: .05em;
+    }
+
+    .det-note {
+      padding: 40px 0 0;
+      opacity: 0;
+      animation: text-breathe 1s cubic-bezier(.16, 1, .3, 1) 8.8s forwards;
+      text-align: center;
+    }
+
+    .det-note-text {
+      font: 400 24px/1.5 'Raleway', sans-serif;
+      color: var(--ink-2);
+      margin-top: 6px;
+    }
+
+    .maps {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding: 12px 40px;
+      border: 0.5px solid var(--gold);
+      color: var(--gold);
+      font: 500 14px/1 'Raleway', sans-serif;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all .3s;
+      opacity: 0;
+      animation: fi .8s ease 4.3s forwards, maps-pulse 2.5s ease-in-out 5.2s infinite;
+    }
+
+    .maps:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* ── BOTTOM ── */
+    .bottom-brand {
+      text-align: center;
+      padding: 20px 0 36px;
+      flex-shrink: 0;
+      z-index: 2;
+      opacity: 0;
+      animation: brand-grand 2s cubic-bezier(.16, 1, .3, 1) 9.0s forwards;
+    }
+
+    .bottom-brand .by {
+      font: 300 italic 26px/1 'Cormorant Garamond', serif;
+      color: var(--ink-4);
+      letter-spacing: .12em;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .bottom-brand .brand {
+      font: 500 32px/1 'Raleway', sans-serif;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      /* Gold metallic gradient */
+      background: linear-gradient(135deg, #462523 0%, #cb9b51 22%, #f6e27a 45%, #f6f2c0 50%, #f6e27a 55%, #cb9b51 78%, #462523 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gold-text-shimmer 4s ease-in-out 10s infinite;
+    }
+
+    /* ═══ LUXURY KEYFRAMES ═══ */
+
+    @keyframes border-reveal {
+      0% {
+        opacity: 0;
+        clip-path: inset(50% 50% 50% 50%);
+      }
+
+      40% {
+        opacity: 0.4;
+        clip-path: inset(15% 15% 15% 15%);
+      }
+
+      70% {
+        opacity: 0.8;
+        clip-path: inset(3% 3% 3% 3%);
+      }
+
+      100% {
+        opacity: 1;
+        clip-path: inset(0% 0% 0% 0%);
+      }
+    }
+
+    @keyframes corner-appear {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      60% {
+        opacity: 0.8;
+        transform: scale(1.2);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes logo-3d {
+      0% {
+        opacity: 0;
+        transform: perspective(600px) rotateY(-25deg) translateX(-30px) scale(0.8);
+        filter: blur(6px);
+      }
+
+      40% {
+        opacity: 0.6;
+        transform: perspective(600px) rotateY(-8deg) translateX(-8px) scale(0.95);
+        filter: blur(2px);
+      }
+
+      70% {
+        opacity: 0.9;
+        transform: perspective(600px) rotateY(3deg) translateX(2px) scale(1.02);
+        filter: blur(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(600px) rotateY(0deg) translateX(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes hr-glow {
+      0% {
+        transform: scaleX(0);
+        filter: drop-shadow(0 0 0 transparent);
+      }
+
+      50% {
+        transform: scaleX(0.7);
+        filter: drop-shadow(0 0 12px rgba(184, 160, 106, 0.8));
+      }
+
+      80% {
+        transform: scaleX(1);
+        filter: drop-shadow(0 0 20px rgba(184, 160, 106, 0.5));
+      }
+
+      100% {
+        transform: scaleX(1);
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes hero-cinematic {
+      0% {
+        opacity: 0;
+        transform: scale(0.7);
+        filter: blur(20px) saturate(0);
+      }
+
+      25% {
+        opacity: 0.4;
+        transform: scale(0.85);
+        filter: blur(10px) saturate(0.5);
+      }
+
+      55% {
+        opacity: 0.9;
+        transform: scale(1.04);
+        filter: blur(2px) saturate(1);
+      }
+
+      75% {
+        opacity: 1;
+        transform: scale(0.98);
+        filter: blur(0) saturate(1);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+        filter: blur(0) saturate(1);
+      }
+    }
+
+    @keyframes gentle-float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes star-bloom {
+      0% {
+        opacity: 0;
+        transform: scale(0) rotate(-360deg);
+        filter: drop-shadow(0 0 0 transparent);
+      }
+
+      35% {
+        opacity: 0.8;
+        transform: scale(1.5) rotate(-30deg);
+        filter: drop-shadow(0 0 18px rgba(184, 160, 106, 1));
+      }
+
+      60% {
+        opacity: 1;
+        transform: scale(0.85) rotate(10deg);
+        filter: drop-shadow(0 0 8px rgba(184, 160, 106, 0.6));
+      }
+
+      80% {
+        transform: scale(1.08) rotate(-3deg);
+        filter: drop-shadow(0 0 4px rgba(184, 160, 106, 0.3));
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 0 transparent);
+      }
+    }
+
+    @keyframes text-elegant {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+        letter-spacing: .3em;
+        filter: blur(8px);
+      }
+
+      40% {
+        opacity: 0.5;
+        letter-spacing: .15em;
+        filter: blur(3px);
+      }
+
+      70% {
+        opacity: 0.9;
+        transform: translateY(-3px);
+        letter-spacing: .1em;
+        filter: blur(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        letter-spacing: .08em;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes text-breathe {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+        filter: blur(8px);
+      }
+
+      40% {
+        opacity: 0.6;
+        filter: blur(3px);
+      }
+
+      70% {
+        opacity: 0.95;
+        transform: translateY(-2px);
+        filter: blur(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes glow-pulse {
+      0% {
+        opacity: 0;
+        width: 0;
+      }
+
+      30% {
+        opacity: 0.8;
+        width: 300px;
+        filter: drop-shadow(0 0 12px rgba(184, 160, 106, 0.8));
+      }
+
+      60% {
+        opacity: 0.4;
+        width: 350px;
+        filter: drop-shadow(0 0 6px rgba(184, 160, 106, 0.4));
+      }
+
+      80% {
+        opacity: 0.6;
+        width: 280px;
+        filter: drop-shadow(0 0 10px rgba(184, 160, 106, 0.6));
+      }
+
+      100% {
+        opacity: 0.3;
+        width: 250px;
+        filter: drop-shadow(0 0 4px rgba(184, 160, 106, 0.2));
+      }
+    }
+
+    @keyframes prog-3d-enter {
+      0% {
+        opacity: 0;
+        transform: perspective(800px) rotateY(-15deg) translateX(-60px);
+        filter: blur(4px);
+      }
+
+      45% {
+        opacity: 0.7;
+        transform: perspective(800px) rotateY(-3deg) translateX(-10px);
+        filter: blur(1px);
+      }
+
+      75% {
+        opacity: 1;
+        transform: perspective(800px) rotateY(2deg) translateX(3px);
+        filter: blur(0);
+      }
+
+      100% {
+        opacity: 1;
+        transform: perspective(800px) rotateY(0deg) translateX(0);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes brand-grand {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+        letter-spacing: 1.2em;
+        filter: blur(6px);
+      }
+
+      30% {
+        opacity: 0.4;
+        letter-spacing: .8em;
+        filter: blur(3px);
+        text-shadow: 0 0 30px rgba(184, 160, 106, 0.6);
+      }
+
+      60% {
+        opacity: 0.8;
+        transform: translateY(-2px) scale(1.02);
+        letter-spacing: .5em;
+        filter: blur(0);
+        text-shadow: 0 0 20px rgba(184, 160, 106, 0.4);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        letter-spacing: .45em;
+        filter: blur(0);
+        text-shadow: 0 0 0 transparent;
+      }
+    }
+
+    @keyframes shimmer-sweep {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 200%;
+      }
+    }
+
+    @keyframes gold-text-shimmer {
+      0% {
+        background-position: 100% 50%;
+      }
+
+      50% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 100% 50%;
+      }
+    }
+
+    @keyframes gold-sweep {
+      0% { opacity: 1; left: -60%; }
+      100% { opacity: 0; left: 160%; }
+    }
+
+    /* Card entrance — dramatic reveal */
+    @keyframes card-entrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(40px);
+        filter: blur(4px) brightness(1.1);
+      }
+      40% {
+        opacity: 0.7;
+        transform: scale(0.98) translateY(10px);
+        filter: blur(1px) brightness(1.05);
+      }
+      70% {
+        opacity: 0.95;
+        transform: scale(1.005) translateY(-3px);
+        filter: blur(0) brightness(1.02);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0) brightness(1);
+      }
+    }
+
+    /* Gold dust particles floating */
+    @keyframes particles-drift {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.5);
+      }
+      15% {
+        opacity: 0.6;
+        transform: translateY(-20px) scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: translateY(-60px) scale(0.8);
+      }
+      80% {
+        opacity: 0.2;
+        transform: translateY(-100px) scale(0.6);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-140px) scale(0.3);
+      }
+    }
+
+    /* ── VIDEO INTRO ── */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .8s ease;
+    }
+
+    .intro-overlay.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-overlay.hidden {
+      display: none;
+    }
+
+    .intro-overlay video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    .intro-overlay video.playing {
+      opacity: 1;
+    }
+
+    .intro-skip {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font: 400 12px/1 'Raleway', sans-serif;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.08);
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+
+    .intro-skip.show {
+      opacity: 1;
+    }
+
+    .intro-skip:hover {
+      color: rgba(255, 255, 255, 0.9);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ── GATE SCREEN ── */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .6s ease;
+    }
+
+    .gate.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .gate.hidden {
+      display: none;
+    }
+
+    .gate-content {
+      text-align: center;
+    }
+
+    .gate-brand {
+      font: 600 12px/1 'Raleway', sans-serif;
+      letter-spacing: .5em;
+      text-transform: uppercase;
+      color: rgba(184, 160, 106, 0.5);
+      margin-bottom: 40px;
+    }
+
+    .gate-name {
+      font: 400 42px/1.2 'Great Vibes', cursive;
+      color: #b8a06a;
+      margin-bottom: 8px;
+    }
+
+    .gate-sub {
+      font: 300 italic 16px/1 'Cormorant Garamond', serif;
+      color: rgba(255, 255, 255, 0.3);
+      margin-bottom: 50px;
+    }
+
+    .gate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      border: 1px solid rgba(184, 160, 106, 0.4);
+      color: #b8a06a;
+      padding: 16px 40px;
+      border-radius: 4px;
+      font: 500 12px/1 'Raleway', sans-serif;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      animation: gate-pulse 2.5s ease infinite;
+    }
+
+    .gate-btn:hover {
+      background: rgba(184, 160, 106, 0.1);
+      border-color: rgba(184, 160, 106, 0.7);
+      transform: scale(1.02);
+    }
+
+    .gate-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @keyframes gate-pulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(184, 160, 106, 0);
+      }
+
+      50% {
+        box-shadow: 0 0 20px 2px rgba(184, 160, 106, 0.15);
+      }
+    }
+
+    /* Pause animations when video is playing */
+    .anim-paused *,
+    .anim-paused *::before,
+    .anim-paused *::after {
+      animation-play-state: paused !important;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- GATE SCREEN -->
+  <div class="gate" id="gate">
+    <div class="gate-content">
+      <div class="gate-brand">The Ritual</div>
+      <div class="gate-name" id="gateName"></div>
+      <div class="gate-sub">You have a private invitation</div>
+      <button class="gate-btn" onclick="openInvitation()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <polyline points="3,5 12,13 21,5"/>
+        </svg>
+        Mở thiệp mời
+      </button>
+    </div>
+  </div>
+
+  <!-- VIDEO INTRO -->
+  <div class="intro-overlay" id="introOverlay" style="display:none">
+    <video id="introVideo" playsinline preload="auto">
+      <source src="intro.mp4" type="video/mp4">
+    </video>
+    <div class="intro-skip" id="introSkip" onclick="skipIntro()">Skip ›</div>
+  </div>
+
+  <div class="wrap anim-paused" id="wrap">
+    <div class="sizer" id="sizer">
+      <div class="card">
+        <div class="card-shimmer"></div>
+        <div class="gold-particles"></div>
+
+        <div class="logos">
+          <div class="logo-box"><img id="logo-louiswu" alt="Louis Wu"></div>
+          <div class="logo-box"><img id="logo-saphire" alt="Saphire"></div>
+          <div class="logo-box"><img id="logo-marcher" alt="Marcher"></div>
+          <div class="logo-box"><img id="logo-selection" alt="Selektion"></div>
+          <div class="logo-box"><img id="logo-tiemen" alt="Tie Men"></div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="main">
+          <div class="hero">
+            <div class="hero-illust"><img id="illustrationImg" alt=""></div>
+            <div class="hero-logo"><img id="ritualLogo" alt="The Ritual"></div>
+          </div>
+
+          <div class="ornament">
+            <div class="line"></div>
+            <svg width="40" height="40" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M50 10 C35 25 15 25 10 50 C15 75 35 75 50 90 C65 75 85 75 90 50 C85 25 65 25 50 10Z" />
+              <circle cx="50" cy="50" r="4" fill="currentColor" stroke="none" />
+              <path d="M50 30 C42 38 30 38 25 50 C30 62 42 62 50 70 C58 62 70 62 75 50 C70 38 58 38 50 30Z" />
+            </svg>
+            <div class="line"></div>
+          </div>
+
+          <div class="invite">
+            <div class="dear">Dear</div>
+            <div class="name-spacer">
+              <div class="name-glow"></div>
+            </div>
+            <div class="body">You are invited to<br><span class="ev">The Ritual · Private Session</span></div>
+          </div>
+
+          <!-- Luxury details grid layout -->
+          <div class="details">
+            <div class="details-grid">
+              <div class="det-row det-1">
+                <div class="det-lab">Dress Code</div>
+                <div class="det-val">Suit &amp;<br>Leather Shoes</div>
+              </div>
+              <div class="det-row det-2">
+                <div class="det-lab">Experience</div>
+                <div class="det-val">Cold Cuts<br>&amp; Sparkling</div>
+              </div>
+              <div class="det-row det-3">
+                <div class="det-lab">Date &amp; Time</div>
+                <div class="det-time">14:00</div>
+                <div class="det-date">Friday, 24 April 2026</div>
+              </div>
+              <div class="det-row det-4">
+                <div class="det-lab">Venue</div>
+                <div class="det-venue">Louis Wu Studio</div>
+                <div class="det-addr">Số 40, Đường 50 Bình Trưng Tây,<br>Thủ Đức, HCM</div>
+              </div>
+            </div>
+
+            <div class="det-note">
+              <div class="det-lab">Kindly Note</div>
+              <div class="det-note-text">Arrive by Grab or taxi · Bring along a pair of shoes</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="hr hr-bottom"></div>
+        <div class="bottom-brand">
+          <span class="by">An Experience by</span>
+          <span class="brand">The Marcher</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var b = location.href.split('?')[0].replace(/[^\/]*$/, '');
+      document.getElementById('illustrationImg').src = b + '%E1%BA%A3nh%20illustration.png';
+      document.getElementById('ritualLogo').src = b + 'LOGO%20THE%20RITUAL.png';
+      var m = {
+        'logo-louiswu': 'Louis%20Wu%20Logo.png',
+        'logo-saphire': 'Saphire%20logo.png',
+        'logo-marcher': 'Marcher%20LOGO.png',
+        'logo-selection': 'selection%20logo.png',
+        'logo-tiemen': 'Tiemen.png'
+      };
+      for (var id in m) document.getElementById(id).src = b + m[id];
+
+      // Guest name
+      var p = new URLSearchParams(location.search);
+      var guestName = p.get('name') || p.get('to') || 'Guest';
+      var nameEl = document.getElementById('guestName');
+      if (nameEl) nameEl.textContent = guestName;
+    })();
+
+    function sc() {
+      var el = document.getElementById('sizer');
+      var s = Math.min(innerWidth / 1080, innerHeight / 1920);
+      el.style.transform = 'scale(' + s + ')';
+      el.style.transformOrigin = 'top center';
+      el.style.marginTop = Math.max(0, (innerHeight - 1920 * s) / 2) + 'px';
+    }
+    sc(); addEventListener('resize', sc);
+
+    // ── GATE + VIDEO INTRO LOGIC ──
+    var gate = document.getElementById('gate');
+    var intro = document.getElementById('introOverlay');
+    var video = document.getElementById('introVideo');
+    var wrap = document.getElementById('wrap');
+    var skipEl = document.getElementById('introSkip');
+    var introEnded = false;
+
+    // Set gate name
+    var gName = new URLSearchParams(location.search).get('name') || new URLSearchParams(location.search).get('to') || 'Guest';
+    document.getElementById('gateName').textContent = gName;
+
+    function openInvitation() {
+      // User has interacted → audio is now allowed by browser
+      gate.classList.add('fade-out');
+      setTimeout(function() {
+        gate.classList.add('hidden');
+      }, 600);
+
+      // Show video overlay and play WITH sound
+      intro.style.display = 'flex';
+      video.muted = false;
+      video.play();
+      setTimeout(function() { video.classList.add('playing'); }, 50);
+
+      // Show skip after 3s
+      setTimeout(function() { skipEl.classList.add('show'); }, 3000);
+    }
+
+    function endIntro() {
+      if (introEnded) return;
+      introEnded = true;
+      intro.classList.add('fade-out');
+      wrap.classList.remove('anim-paused');
+      setTimeout(function() { intro.classList.add('hidden'); }, 800);
+    }
+
+    function skipIntro() {
+      video.pause();
+      endIntro();
+    }
+
+    video.addEventListener('ended', endIntro);
+  </script>
+</body>
+
+</html>
